@@ -2,6 +2,7 @@
 
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
+
 	$executionStartTime = microtime(true) / 1000;
 
 	$url='api.geonames.org/findNearbyPostalCodesJSON?postalcode=' . $_REQUEST['postcode'] . '&country=' . $_REQUEST['country'] . '&username=roopam05';
@@ -22,9 +23,7 @@
 	$output['status']['description'] = "mission saved";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 	$output['data'] = $decode['postalCodes'];
-	$output['url'] = $url;
 
-	
 	header('Content-Type: application/json; charset=UTF-8');
 
 	echo json_encode($output); 
