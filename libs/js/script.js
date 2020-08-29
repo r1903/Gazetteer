@@ -74,7 +74,7 @@ function drawMap(searchCountry,capitalCity,lat,lng,isoCode){
 
  // Creating a custom icon
   let customIcon = L.icon({
-      iconUrl: 'capital.png',
+      iconUrl: 'capital.jpg',
       iconSize: [50, 40],
       iconAnchor: [25, 40],
       popupAnchor: [0, -41]
@@ -196,12 +196,9 @@ $("#countries").autocomplete({
         let countryCode = result.results[0].components.country_code;
 
         if(window.localStorage.getItem(countryName)){
-          updateUi(JSON.parse(window.localStorage.getItem(countryName)),1);
-       
+          updateUi(JSON.parse(window.localStorage.getItem(countryName)),1); 
         }else{
-  
           getContryInfo(isoCode,countryCode,countryName,1);
-  
         }
 
       },
