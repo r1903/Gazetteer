@@ -74,7 +74,7 @@ function drawMap(searchCountry,capitalCity,lat,lng,isoCode){
 
  // Creating a custom icon
   let customIcon = L.icon({
-      iconUrl: 'capital.jpg',
+      iconUrl: 'libs/images/capital.png',
       iconSize: [50, 40],
       iconAnchor: [25, 40],
       popupAnchor: [0, -41]
