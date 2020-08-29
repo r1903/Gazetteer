@@ -5,14 +5,14 @@
 
 	$executionStartTime = microtime(true) / 1000;
 
-// api call to restcountry to get country information for select country.
+// api call to  to get country information for selected country.
 
 	$ch = array();
 	$mh = curl_multi_init();
 
 	
 	$URLs = array( 'https://restcountries.eu/rest/v2/name/' . $_REQUEST['countryCode'] . '?fullText=true',
-	'http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=' . $_REQUEST['countryName'] .'&username=roopam05&style=full');
+	'http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=' . $_REQUEST['countryName'] .'&countrycode=' .$_REQUEST['countryCode'] .'&username=roopam05&style=full');
 	
 	$i = 0;
 	foreach($URLs as $url) {
@@ -41,7 +41,7 @@
 	$output['wikiData'] = json_decode($content[1],true);
 
 
-// api call to opencage to get longitude and lattitude for capital city.
+// opencage api call to get longitude and lattitude for capital city.
 	$geocoder = new \OpenCage\Geocoder\Geocoder('98cf03024b8046b9827dd3f64c966131');
 	
 	$string = $output['data'][0]['capital'] ;

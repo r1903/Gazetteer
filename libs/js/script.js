@@ -74,7 +74,7 @@ function drawMap(searchCountry,capitalCity,lat,lng,isoCode){
 
  // Creating a custom icon
   let customIcon = L.icon({
-      iconUrl: 'libs/js/capital.png',
+      iconUrl: 'capital.png',
       iconSize: [50, 40],
       iconAnchor: [25, 40],
       popupAnchor: [0, -41]
@@ -144,7 +144,8 @@ function getContryInfo(isoCode,countryCode,countryName,load){
         let lng = result.capital.results[0].geometry.lng;
         let capitalCity = result.data[0].capital;
         let wikiData=null;
-       
+
+
         if(result.wikiData.geonames){
           wikiData = result.wikiData.geonames.filter(element=> (element.title === countryName || element.title === result.data[0].capital || element.countryCode === countryCode));
         }
@@ -195,8 +196,7 @@ $("#countries").autocomplete({
         let countryCode = result.results[0].components.country_code;
 
         if(window.localStorage.getItem(countryName)){
-          updateUi(JSON.parse(window.localStorage.getItem(countryName)),1)
-          console.log('second');
+          updateUi(JSON.parse(window.localStorage.getItem(countryName)),1);
        
         }else{
   
@@ -245,9 +245,9 @@ function updateUi(countryInfo,load) {
   $('#region').html(`<b>Region:</b> ${region}`);
   
   if(wikiData){
-   let data='';
+    let data='';
     wikiData.map(wikiData=>{
-      data += `<h4> ${wikiData.title == name ?'':wikiData.title} </h4><img src=${wikiData.thumbnailImg}><p>${wikiData.summary}</p><p><a href=https://${wikiData.wikipediaUrl}>For more information </a></p>`
+      data += `<h4> ${wikiData.title == name ?'': wikiData.title} </h4><img src=${wikiData.thumbnailImg}><p>${wikiData.summary}</p><p><a href=https://${wikiData.wikipediaUrl}>For more information </a></p>`
     }) 
 
     $('#wikiData').html(data);
