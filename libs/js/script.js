@@ -79,9 +79,9 @@ function drawMap(searchCountry,capitalCity,lat,lng,isoCode,wikiData){
    // Creating a custom icon for wikipedia search
   let cityIcon = L.icon({
     iconUrl: 'libs/images/cityMarker.png',
-    iconSize: [50, 40],
-    iconAnchor: [25, 40],
-    popupAnchor: [0, -41]
+    iconSize: [40, 30],
+    iconAnchor: [20, 30],
+    popupAnchor: [0, -31]
 });
   
   wikiData.forEach((data, i) => {
