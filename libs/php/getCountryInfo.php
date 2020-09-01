@@ -12,7 +12,7 @@
 
 	
 	$URLs = array( 'https://restcountries.eu/rest/v2/name/' . $_REQUEST['countryCode'] . '?fullText=true',
-	'http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=' . $_REQUEST['countryName'] .'&countrycode=' .$_REQUEST['countryCode'] .'&username=roopam05&style=full');
+	'http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=' . $_REQUEST['countryName'] .'&countrycode=' .$_REQUEST['countryCode'] .'&maxRows=25&username=roopam05&style=full');
 	
 	$i = 0;
 	foreach($URLs as $url) {

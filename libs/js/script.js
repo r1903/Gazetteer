@@ -61,7 +61,7 @@ function errorFunction(position)
 }
 	
 /*function to draw leaflet map on div*/
-function drawMap(searchCountry,capitalCity,lat,lng,isoCode){
+function drawMap(searchCountry,capitalCity,lat,lng,isoCode,wikiData){
 
   let mapOptions = {
     center: [lat, lng],
@@ -72,22 +72,39 @@ function drawMap(searchCountry,capitalCity,lat,lng,isoCode){
   let layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
   map.addLayer(layer);
 
- // Creating a custom icon
-  let customIcon = L.icon({
-      iconUrl: 'libs/images/capital.png',
-      iconSize: [50, 40],
-      iconAnchor: [25, 40],
-      popupAnchor: [0, -41]
+  const markers = new L.FeatureGroup().addTo(map);
+ 
+  wikiData = wikiData.filter(data=>(data.title!=capitalCity && data.title!=searchCountry));
+
+   // Creating a custom icon for wikipedia search
+  let cityIcon = L.icon({
+    iconUrl: 'libs/images/cityMarker.png',
+    iconSize: [50, 40],
+    iconAnchor: [25, 40],
+    popupAnchor: [0, -41]
+});
+  
+  wikiData.forEach((data, i) => {
+    const m = new L.Marker([data.lat,data.lng], {icon:cityIcon})
+            m.bindPopup(`<h6 style="text-align:center;font-weight:bold">${data.title}</h6> <p><a href=https://${data.wikipediaUrl} target="blank">Click link for more info... </a></p>`).openPopup();
+            markers.addLayer(m)
+  });
+  
+ // Creating a custom icon for capital city
+  let capitalIcon = L.icon({
+      iconUrl: 'libs/images/capitalMarker.png',
+      iconSize: [40, 30],
+      iconAnchor: [20, 30],
+      popupAnchor: [0, -31]
   });
 
   let markerOptions = {
-    title: `This is ${searchCountry}`,
-    icon: customIcon
+    icon: capitalIcon
   }
 
   let marker = new L.Marker([lat, lng],markerOptions);
-  marker.bindPopup(`<p><b>${capitalCity}</b> capital of <b>${searchCountry}</b></p>`).openPopup();
-  marker.addTo(map);
+  marker.bindPopup(`<h6 style="text-align:center;font-weight:bold">${capitalCity}</h6><p>capital city of <b>${searchCountry}</b></p>`).openPopup();
+  markers.addLayer(marker);
    
   let country = countries.filter( element => element.properties.ISO_A3 === isoCode);
   let multiPolygonOptions = {color:'orange', weight:4,opacity:0.5};
@@ -134,22 +151,16 @@ function getContryInfo(isoCode,countryCode,countryName,load){
       countryName:encodeURI(countryName)
     },
     success: function(result) {
-      console.log(result);
        
-        if(load==1){
-          map.remove();
-        }
-      
         let lat = result.capital.results[0].geometry.lat;
         let lng = result.capital.results[0].geometry.lng;
         let capitalCity = result.data[0].capital;
         let wikiData=null;
-
-
+   
         if(result.wikiData.geonames){
-          wikiData = result.wikiData.geonames.filter(element=> (element.title === countryName || element.title === result.data[0].capital || element.countryCode === countryCode));
+          wikiData = result.wikiData.geonames.filter(element=> (element.summary.includes(countryName)));
         }
-
+   
         const country = {
           name : countryName,
           capital : capitalCity,
@@ -166,7 +177,7 @@ function getContryInfo(isoCode,countryCode,countryName,load){
 
         window.localStorage.setItem(`${countryName}`, JSON.stringify(country));
         
-        updateUi(country); 
+        updateUi(country,load); 
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.log(jqXHR);
@@ -213,7 +224,7 @@ $("#countries").autocomplete({
 
 function updateWeather () {
   
-  let country = $('#name').text().split(':')[1]
+  let country = $('#name').text().split(':')[1];
   let city = $('#capitalCity').text().split(':')[1];
 
   if(country && city){
@@ -226,14 +237,11 @@ function updateWeather () {
 /*function to update country info on UI*/
 function updateUi(countryInfo,load) {
 
-  const {name,capital,latitude,longitude,isocode,flag,population,currencyName,currencySymbol,region,wikiData} = countryInfo 
-  
+  const {name,capital,latitude,longitude,isocode,flag,population,currencyName,currencySymbol,region,wikiData} = countryInfo ;
+   
   if(load==1){
     map.remove();
   }
-  
-  drawMap(name,capital,latitude,longitude,isocode);
-  getWeather(capital,name);
 
   $('#exampleModalLabel').html(`<span>${name}</span><img src=${flag} alt="flag" width="50px" height="50px">`);
   $('#capitalCity').html(`<b>Capital City:</b> ${capital}`);
@@ -244,10 +252,13 @@ function updateUi(countryInfo,load) {
   if(wikiData){
     let data='';
     wikiData.map(wikiData=>{
-      data += `<h4> ${wikiData.title == name ?'': wikiData.title} </h4><img src=${wikiData.thumbnailImg}><p>${wikiData.summary}</p><p><a href=https://${wikiData.wikipediaUrl}>For more information </a></p>`
+      data += `<h4> ${wikiData.title == name ?'': wikiData.title} </h4><img src=${wikiData.thumbnailImg}><p>${wikiData.summary}</p><p><a href=https://${wikiData.wikipediaUrl} target="_blank">For more information </a></p>`
     }) 
 
     $('#wikiData').html(data);
   }
+
+  drawMap(name,capital,latitude,longitude,isocode,wikiData);
+  getWeather(capital,name);
 
 }
