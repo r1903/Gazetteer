@@ -80,29 +80,23 @@ function drawMap(searchCountry,capitalCity,lat,lng,isoCode,wikiData){
   wikiData = wikiData.filter(data=>(data.title!=capitalCity && data.title!=searchCountry));
 
    // Creating a custom icon for wikipedia search
-  let cityIcon = L.icon({
-    iconUrl: 'libs/images/cityMarker.png',
-    iconSize: [40, 30],
-    iconAnchor: [20, 30],
-    popupAnchor: [0, -31]
-});
+  let cityIcon = L.ExtraMarkers.icon({
+    markerColor: 'cyan',
+  });
   
   wikiData.forEach((data, i) => {
     const m = new L.Marker([data.lat,data.lng], {icon:cityIcon})
             m.bindPopup(`<h6 style="text-align:center;font-weight:bold">${data.title}</h6> <p><a href=https://${data.wikipediaUrl} target="blank">Click link for more info... </a></p>`).openPopup();
             markers.addLayer(m)
   });
-  
- // Creating a custom icon for capital city
-  let capitalIcon = L.icon({
-      iconUrl: 'libs/images/capitalMarker.png',
-      iconSize: [40, 30],
-      iconAnchor: [20, 30],
-      popupAnchor: [0, -31]
+
+  var redMarker = L.ExtraMarkers.icon({
+    markerColor: 'blue',
   });
 
+
   let markerOptions = {
-    icon: capitalIcon
+    icon: redMarker
   }
 
   let marker = new L.Marker([lat, lng],markerOptions);

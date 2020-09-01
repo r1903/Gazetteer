@@ -13,7 +13,7 @@ header {
   padding:0 2vw 0 0;
 }
 
-.title{
+.title {
   font-style:italic;
   font-weight:bold;
   color:white;
@@ -21,9 +21,11 @@ header {
   margin:0;
 }
 
-.title img{
-  height:8vh;
+.title img {
+  position: relative;
+  height:3vh;
   width:auto;
+  bottom:0.5vh;
 }
 
 #countries{
@@ -81,6 +83,12 @@ div#preloader {
   border-top: 1px solid orange;
 }
 
+.modal-body{
+  min-height: 70vh;
+  max-height: 70vh;
+  overflow-y: scroll;
+}
+
 .modal-body img{
   width:30%;
   height:auto;
@@ -92,6 +100,11 @@ div#preloader {
   font-size:8vw;
 }
 
+.icon{
+  position: relative;
+  top:8px;
+  color:white;
+}
 @media screen and (min-width: 500px) {
 
   .title{
@@ -99,7 +112,8 @@ div#preloader {
   }
 
   .title img{
-    height:10vh;
+    height:5vh;
+    bottom:1vh;
   }
   
   #countries{
