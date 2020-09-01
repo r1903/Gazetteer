@@ -5,7 +5,7 @@
 
 	$geocoder = new \OpenCage\Geocoder\Geocoder('98cf03024b8046b9827dd3f64c966131');
 	
-	$string = (isset($_REQUEST['country'])) ? $_REQUEST['country'] : $_REQUEST['latitude'].',' .$_REQUEST['longitude'] ;
+	$string = (isset($_POST['country'])) ? $_POST['country'] : $_POST['latitude'].',' .$_POST['longitude'] ;
 	
 	$result = $geocoder->geocode($string); 
 

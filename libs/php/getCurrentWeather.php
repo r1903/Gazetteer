@@ -3,7 +3,7 @@
 	$executionStartTime = microtime(true) / 1000;
 
 // api call to restcountry to get country information for select country.
-	$url='https://api.openweathermap.org/data/2.5/weather?q=' . $_REQUEST['capitalCity'] . ',' . $_REQUEST['countryName'] . '&APPID=7090cabc9596ebe50bdf409014f045af';
+	$url='https://api.openweathermap.org/data/2.5/weather?q=' . $_POST['capitalCity'] . ',' . $_POST['countryName'] . '&APPID=7090cabc9596ebe50bdf409014f045af';
 	$ch = curl_init();
 	
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);

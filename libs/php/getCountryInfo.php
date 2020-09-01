@@ -11,8 +11,8 @@
 	$mh = curl_multi_init();
 
 	
-	$URLs = array( 'https://restcountries.eu/rest/v2/name/' . $_REQUEST['countryCode'] . '?fullText=true',
-	'http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=' . $_REQUEST['countryName'] .'&countrycode=' .$_REQUEST['countryCode'] .'&maxRows=25&username=roopam05&style=full');
+	$URLs = array( 'https://restcountries.eu/rest/v2/name/' . $_POST['countryCode'] . '?fullText=true',
+	'http://api.geonames.org/wikipediaSearchJSON?formatted=true&q=' . $_POST['countryName'] .'&countrycode=' .$_POST['countryCode'] .'&maxRows=25&username=roopam05&style=full');
 	
 	$i = 0;
 	foreach($URLs as $url) {
