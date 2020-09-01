@@ -69,7 +69,10 @@ function drawMap(searchCountry,capitalCity,lat,lng,isoCode,wikiData){
   }
 
   map = new L.map('map', mapOptions);
-  let layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+  let layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
   map.addLayer(layer);
 
   const markers = new L.FeatureGroup().addTo(map);
