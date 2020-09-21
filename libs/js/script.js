@@ -12,7 +12,7 @@ $(document).ready(function() {
     setInterval(updateWeather,3600000);
   }
   else 
-  {
+  {    
     alert('Geolocation is not enabled in your browser.');
   } 
 });
@@ -57,7 +57,16 @@ function successFunction(position)
 /*function to handle error while finding current location*/
 function errorFunction(position) 
 {
-    alert('Error while fetching current location');
+  let mapOptions = {
+    center: [51.50998, -0.1337],
+    zoom: 4
+  }
+  map = new L.map('map', mapOptions);
+  let layer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
+  map.addLayer(layer);
 }
 	
 /*function to draw leaflet map on div*/
